@@ -74,7 +74,7 @@ def run(cyto_job, parameters):
 
     # ----- load network ----
     # model = "/models/3333nuclei_densenet201_best_model_100ep.pth"
-    model = "3333nuclei_densenet201_best_model_100ep.pth"
+    model = "/models/3333nuclei_densenet201_best_model_100ep.pth"
     gpuid = 0
 
     device = torch.device(gpuid if gpuid!=-2 and torch.cuda.is_available() else 'cpu')
