@@ -57,7 +57,7 @@ __author__ = "WSH Munirah W Ahmad <wshmunirah@gmail.com>"
 __version__ = "1.0.1"
 
 def run(cyto_job, parameters):
-    logging.info("----- test software v%s -----", __version__)
+    logging.info("----- Classify_NWMS_ER_pytorch_DenseNet201 v%s -----", __version__)
     logging.info("Entering run(cyto_job=%s, parameters=%s)", cyto_job, parameters)
 
     job = cyto_job.job
@@ -74,12 +74,12 @@ def run(cyto_job, parameters):
 
     # ----- load network ----
     # model = "/models/3333nuclei_densenet201_best_model_100ep.pth"
-    model = "/models/3333nuclei_densenet201_best_model_100ep.pth"
+    modelname = "/models/3333nuclei_densenet201_best_model_100ep.pth"
     gpuid = 0
 
     device = torch.device(gpuid if gpuid!=-2 and torch.cuda.is_available() else 'cpu')
 
-    checkpoint = torch.load(model, map_location=lambda storage, loc: storage) #load checkpoint to CPU and then put to device https://discuss.pytorch.org/t/saving-and-loading-torch-models-on-2-machines-with-different-number-of-gpu-devices/6666
+    checkpoint = torch.load(modelname, map_location=lambda storage, loc: storage) #load checkpoint to CPU and then put to device https://discuss.pytorch.org/t/saving-and-loading-torch-models-on-2-machines-with-different-number-of-gpu-devices/6666
 
     model = DenseNet(growth_rate=checkpoint["growth_rate"], block_config=checkpoint["block_config"],
                     num_init_features=checkpoint["num_init_features"], bn_size=checkpoint["bn_size"],
@@ -87,7 +87,7 @@ def run(cyto_job, parameters):
 
     model.load_state_dict(checkpoint["model_dict"])
     model.eval()
-
+    print("Model name: ",modelname)
     print(f"Model successfully loaded! Total params: \t{sum([np.prod(p.size()) for p in model.parameters()])}")
         
     #Select images to process
